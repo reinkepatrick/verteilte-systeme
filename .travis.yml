@@ -1,21 +1,17 @@
 sudo: required
 dist: trusty
-language: bash
-
 before_install:
-- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
-
+- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends latexmk
+  texlive-fonts-extra texlive-fonts-recommended texlive-latex-base texlive-latex-extra
+  texlive-latex-recommended
 script:
-- mkdir _build
-- pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build main.tex
-
+- latexmk -pdf ./main.tex
 deploy:
   provider: releases
   api_key:
-    secure: zxFxKRwgsmxDAHz2d2mB
+    secure: <key from travis CLI script>
   file:
-  - _build/your_file_1.pdf
-  - _build/your_file_2.pdf
+  - resume.pdf
   skip_cleanup: true
   on:
     tags: true
