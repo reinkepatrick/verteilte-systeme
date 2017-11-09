@@ -1,21 +1,11 @@
-sudo: required
-dist: trusty
+sudo: require
+dist: xenial
 language: bash
 
 before_install:
-- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+  - sudo apt-get -qq update
+  - sudo apt-get install -y texlive-base texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
+
 
 script:
-- mkdir _build
-- pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build main.tex
-
-deploy:
-  provider: releases
-  api_key:
-    secure: zxFxKRwgsmxDAHz2d2mB
-  file:
-  - _build/your_file_1.pdf
-  - _build/your_file_2.pdf
-  skip_cleanup: true
-  on:
-    tags: true
+  - bash test.sh ./ main
