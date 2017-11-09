@@ -1,0 +1,39 @@
+\newpage
+\section{Aufgabe 1: b}
+
+\subsection{Aufgabenstellung}
+Wählen Sie eine aktuelle Linux-Distribution aus und installieren Sie diese in einer virtuellen Maschine. Beschreiben Sie Ihr Vorgehen! Tipp: zur besseren Wiederverwendbarkeit in Folgeaufgaben bietet sich Ubuntu 12.04 mit mindestens 15 GiB HDD an. Alle folgenden Praktikumsaufgaben wurden auf dieser Umgebung getestet. (2 Punkte)
+
+\subsection{Vorbereitung}
+Für diese Aufgabe benötigt man Oracle VirtualBox (\url{https://www.virtualbox.org/}), welche man vorher installieren muss. Ebenfalls muss man sich Ubuntu 12.04 (\url{http://releases.ubuntu.com/12.04/}) herunterladen.
+
+\subsection{Durchführung}
+Nachdem Sie die VirtualBox von Oracle installiert haben und Ubuntu 12.4 heruntergeladen haben, starten Sie die VirtualBox. 
+
+\begin{enumerate}
+	\item Im Oracle VM VirtualBox Manager auf \textit{Neu} klicken \\\
+	\textbf{Nun öffnet sich ein neues Fenster} 
+	\item Nun geben Sie der virtuellen Maschine einen Namen (\textit{studia \& studib})
+	\item Wählen Sie ein Typ (\textit{Linux}) und eine Version (\textit{Ubuntu (64-bit)})
+	\item Jetzt weisen Sie der virtuellen Maschine RAM nach Bedarf zu, bei uns nehmen wir \textit{4 GiB}
+	\item \textit{Festplatte erzeugen} auswählen und mit \textit{Erzeugen} bestätigen
+	\item Klicken Sie auf \textit{Expert-Modus}
+	\item Sie müssen jetzt den Dateipfad und die Größe der Festplatte wählen, wir benutzen in unserem Fall \textit{15 GiB}
+	\item Beim Dateityp \textit{VDI (VirtualBox Disk Image)},  \textit{dynamisch alloziert} auswählen und mit \textit{Erzeugen} bestätigen
+	\item Starten Sie nun die virtuelle Maschine, Sie werden nun nach der heruntergeladene iso-Datei gefragt, diese wählen Sie nun aus 
+	\item Wählen Sie nun ihre gewollte Sprache (\textit{Deutsch})
+	\item Betätigen Sie \textit{Ubuntu installieren}
+	\item Nun können Sie immer mit \textit{Enter} bestätigen bis Sie zur Tastaturmodell-Erkennung kommen, dort wählen Sie \textit{Ja}
+	\item Jetzt sind Sie bei der Netzwerk-Einrichtung und müssen einen Rechnernamen angeben, wir nehmen in unserem Fall \textit{VM01 \& VM02}
+	\item Sie müssen jetzt Ihren vollständigen Namen angeben
+	\item Während der Installation \textit{Benutzername}, \textit{Passwort} und \textit{Zeitzone} festlegen \\
+	In diesem Beispiel verwenden wir \textit{studia \& studib} als Benutzernamen und \textit{asdf123} als Passwort
+	\item Bei der Partitionierung einfach mit \textit{Enter} bestätigen, da diese für uns nicht relevant sind
+	\item HTTP-Proxy für den Paketmanager benötigen Sie nicht, außer Sie möchten einen verwenden, dann diesen angeben 
+	\item Die letzten Einstellungen bestätigen Sie mit \textit{Enter} \\
+	Nun startet Ihr \textit{Ubuntu 12.04}
+	\item Zu guter Letzt bietet sich noch an über den Reiter \textit{Geräte} die Gasterweiterungen zu installieren um ein leistungsfähiges ausführen der VM zu gewährleisten oder auch für Drag-N-Drop zwischen VM und Host System zu aktivieren
+\end{enumerate}
+
+\subsection{Fazit}
+Die Installation einer virtuelle Maschine ähnlich einfach wie die normale Installation auf einem Rechner. Es ist eine Mischung aus \textit{Weiter} drücken und kleineren Konfigurationen welche allesamt einfach von der Hand gehen. Dieser Prozess dürfte niemandem schwer gefallen sein, der bereits ein Betriebssystem installiert hat.

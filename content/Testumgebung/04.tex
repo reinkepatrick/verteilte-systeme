@@ -1,0 +1,27 @@
+\newpage
+
+\section{Aufgabe 1: d}
+
+\subsection{Aufgabenstellung}
+Prüfen Sie die Erreichbarkeit der Maschinen untereinander! Welches Programm verwenden Sie dazu? (1 Punkt)
+
+\subsection{Vorbereitung}
+Sie benötigen für die Aufgabe zwei virtuellen Maschinen mit installiertem \textit{Ubuntu 12.04} und konfiguriert in einem \textit{Host-only} Netzwerk, wie in den vorherigen Aufgaben beschrieben. Sie sollten diese gestartet haben.
+
+\subsection{Durchführung}
+Für diesen Test verwenden Sie \textit{ping}.
+
+\begin{enumerate}
+	\item Startet Sie mit \textit{studia} das Terminal mit der Tastenkombination Strg + Alt + T
+	\item Geben Sie im Terminal \\
+	\begin{lstlisting}
+$ ping -c 3 192.168.56.102
+	\end{lstlisting}
+	\textbf{Hinweis}: Der Parameter \textit{-c} von \textit{Ping} steht für \textit{count}, er stoppt nachdem er die angegebene Anzahl an Requests gesendet hat. \\\\
+	\textbf{Hinweis}: Die angegebene IP-Adresse gehört zu \textit{studib}
+	\item Diese Versuch können Sie nun auch umgekehrt ausführen.
+\end{enumerate}
+
+\subsection{Fazit}
+Diese Aufgabe ist leicht durchzuführen, wenn man die IP-Adressen selbst verteilt hat, sonst muss man diese vorher mit \textit{ifconfig} herausfinden. Diese Aufgabe hat keine Probleme bereitet.
+

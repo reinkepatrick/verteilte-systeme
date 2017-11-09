@@ -1,0 +1,71 @@
+\newpage
+
+\section{Aufgabe 1: f}
+
+\subsection{Aufgabenstellung}
+Setzen Sie auf einer der virtuellen Maschinen die Software ownCloud auf (Ubuntu Installationspaket owncloud). Zeigen Sie, dass von der anderen virtuellen Maschine ein Zugriff auf ownCloud möglich ist. (2 Punkte)
+
+\subsection{Vorbereitung}
+Für die Installation von ownCloud wird ein Webserver mit Apache2, PHP und eine Datenbank benötigt. Wir führen diese Installation auf einem System mit \textit{Ubuntu 16.04} durch, welches wie wir oben eingerichtet haben.
+
+\subsection{Durchführung}
+Wir machen die komplette Installation zusammen, mit allen dazu gehörigen Paketen. 
+
+\begin{enumerate}
+	\item Als erstes aktualisieren Sie alle bereits vorhandenen Pakete
+	\begin{lstlisting}
+$ sudo apt-get update && sudo apt-get upgrade
+	\end{lstlisting}
+	\item Nun beginnen Sie mit der Installation von benötigten Paketen
+	\begin{lstlisting}
+$ sudo apt-get install -y apache2 mariadb-server 
+libapache2-mod-php7.0 \
+php7.0-gd php7.0-json php7.0-mysql 
+php7.0-curl \ php7.0-intl php7.0-mcrypt 
+php-imagick \ php7.0-zip php7.0-xml 
+php7.0-mbstring
+	\end{lstlisting}
+	\item Jetzt wechseln Sie das Verzeichnis von ihrem frisch installiertem Webserver
+	\begin{lstlisting}
+$ cd /var/www
+	\end{lstlisting}
+	\item Nun laden Sie sich manuell die ownCloud runter, weil sie kann wegen Sicherheitsproblemen nicht mehr aus den offiziellen Paketquellen von Ubuntu installiert werden.
+	\begin{lstlisting}
+$ sudo wget https://download.owncloud.org/community/owncloud-10.0.3.tar.bz2
+	\end{lstlisting}
+	\item Jetzt entpacken Sie die gerade heruntergeladene Datei
+	\begin{lstlisting}
+$ sudo tar -xf owncloud-10.0.3.tar.bz2
+	\end{lstlisting}
+	\item Jetzt konfigurieren Sie noch den installierten Webserver
+	\begin{lstlisting}
+$ sudo nano /etc/apache2/sites-available/owncloud.conf
+	\end{lstlisting}
+	\begin{lstlisting}
+Alias /owncloud "/var/www/owncloud/"
+<Directory /var/www/owncloud/>
+  	Options +FollowSymlinks
+  	AllowOverride All
+
+ 	<IfModule mod_dav.c>
+  		Dav off
+ 	</IfModule>
+
+ 	SetEnv HOME /var/www/owncloud
+ 	SetEnv HTTP_HOME /var/www/owncloud
+
+</Directory>
+	\end{lstlisting}
+	\item Jetzt geben Sie dem www-data die notwendigen Rechte für die Installation
+	\begin{lstlisting}
+$ sudo chown -R www-data:www-data /var/www/owncloud/
+	\end{lstlisting}
+	\item Nun rufen Sie mit einem Browser ihrer Wahl die Webseite von ihrer persönlichen ownCloud auf (url{http://localhost/owncloud/}).
+	\item Jetzt folgen Sie nur noch die Anweisungen die ihnen ownCloud gibt. \\\\
+	\textbf{Hinweis}: Die Datenbankdaten lauten: \\ 
+			\textit{Benutzername: root \\ 
+			Passwort:}
+\end{enumerate}
+
+\subsection{Fazit}
+Die Installation konnten wir nur theoretisch durchführen \cite{owncloud:install}, da wir mit diversen Ubuntu Distributionen Probleme hatten. \textit{Ubuntu 12.04} und \textit{Ubuntu 17.04} hatten Paketabhängigkeitsprobleme. Unter \textit{Ubuntu 16.04} hatten wir das Problem, dass er den Datenbank-Benutzer nicht angenommen hat, trotz mehrmaligen Passwortänderungen.
