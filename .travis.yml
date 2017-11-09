@@ -9,7 +9,7 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: <key from travis CLI script>
+    secure: zxFxKRwgsmxDAHz2d2mB
   file:
   - resume.pdf
   skip_cleanup: true
