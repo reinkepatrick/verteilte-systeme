@@ -8,10 +8,18 @@ Machen Sie sich zunächst mit dem Befehl und den Parametern vertraut. Auch der N
 Um diese Aufgabe lösen zu können, muss man sich mit dem Befehl \texttt{nslookup} auseinandersetzen und herausfinden wie man diesen konfiguriert. 
 
 \subsection{Durchführung}
-Die Default Adresse lautet \texttt{10.131.128.70} und kann mit einer \texttt{nslookup} Abfrage herausgefunden werden. Der erste Eintrag dort ist es.
+Die Default Adresse lautet \texttt{192.168.2.1}, also die IP des Routers, und kann mit einer \texttt{nslookup} Abfrage herausgefunden werden. Der erste Eintrag dort ist es.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4 \linewidth]{images/11}
-	\caption{Ausführung von nslookup}
+	\caption{Ausführung von nslookup am Campus Minden}
+\end{figure}
+
+Um diese Default Addresse zu ändern, schreibt man einfach die DNS-IP die man nehmen möchte hinter die URL.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4 \linewidth]{images/12}
+	\caption{Ausführung von nslookup mit anderem Server}
 \end{figure}
