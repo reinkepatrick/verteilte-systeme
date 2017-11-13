@@ -1,0 +1,36 @@
+\newpage
+
+\section{Aufgabe 1: f}
+
+\subsection{Aufgabenstellung}
+Machen Sie sich zunächst mit dem Befehl und den Parametern vertraut. (0,5 Punkte)
+
+\subsection{Vorbereitung}
+Für diese Aufgabe sollte man sich eine gute Wiki-Seite suchen, in unserem Fall benutzen wir die von ubuntuusers (\url{https://wiki.ubuntuusers.de/netstat/}).
+
+\subsection{Durchführung}
+netstat ist ein Diagnose-Werkzeug um Informationen über die Netzwerkschnittstelle zu bekommen.
+\textbf{Syntax}: 
+\begin{lstlisting}
+$ netstat [OPTIONEN]
+\end{lstlisting}
+\textbf{Parameter}: 
+\begin{table}[H]
+	\tablestyle
+	\begin{tabular}{lll}
+		\toprule
+			Option & Abkürzung & Beschreibung \tabularnewline
+				
+		\midrule
+			- -tcp & -t & Zeigt nur TCP-Sockets an\tabularnewline
+			- -udp & -t & Zeigt nur UDP-Sockets an\tabularnewline
+			- -listening & -t & Zeigt nur offene Ports an\tabularnewline
+			- -numeric & -n & Übersetzt keine Nummern in Namen\tabularnewline
+			- -extend & -e & Zeigt erweiterte Informationen an\tabularnewline
+			- -program & -p & Zeigt die Prozess-ID und den Programmnamen des Prozesses an\tabularnewline
+			
+	\end{tabular}
+\end{table}
+ 
+\subsection{Fazit}
+Der \textit{netstat} ist ein simples Kommando und sollte niemanden schwerfallen.
