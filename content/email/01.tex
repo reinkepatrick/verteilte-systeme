@@ -1,0 +1,60 @@
+\newpage
+\section{Aufgabe 1}
+
+\subsection{Aufgabenstellung}
+Eine der bekanntesten Applikationen im Internet ist eMail. Erklären Sie in Stichworten, welche Protokolle und Abläufe das Senden und Empfangen von eMails ermöglichen. Wie funktioniert das
+SMTP Protokoll? Wie funktionieren die Protokolle POP3 und IMAP? (1 Punkt je Protokoll)
+
+\subsection{Vorbereitung}
+Um diese Aufgabe lösen zu können muss man verstehen wie diese unterschiedlichen Protokolle funktionieren. 
+
+\subsection{Durchführung}
+\begin{itemize}
+	\item \textbf{SMTP}: 
+	\begin{itemize}
+		\item Server wartet auf eine Verbindung
+		\item Client ruft den Server auf
+		\item Server meldet sich bereit für die Verbindung
+		\item Client nennt seinen Namen
+		\item Server bestätigt
+		\item Client nennt die Adresse des Absenders
+		\item Server bestätigt
+		\item Client nennt die Adresse des Empfängers
+		\item Server bestätigt
+		\item Client kündigt die Daten für die E-Mail an
+		\item Server bestätigt für den E-Mail Inhalt
+		\item Client sendet Inhalt der E-Mail und beendet durch eine Zeile mit nur einem Punkt
+		\item Server bestätigt und verarbeitet diese E-Mail
+		\item Client fordert die Trennung der Verbindung
+		\item Server schließt die Verbindung
+	\end{itemize}
+	\item \textbf{POP3}: 
+	\begin{itemize}
+		\item Server wartet auf eine Verbindung
+		\item Client stellt Verbindung zum Server her
+		\item Server meldet sich bereit für die Verbindung
+		\item Client sendet Benutzername
+		\item Server fordert Passwort an
+		\item Client sendet Passwort in Klartext
+		\item Server gibt Informationen über die Anmeldung
+		\item Client fragt nach einer E-Mail
+		\item Server sendet Inhalt dieser E-Mail
+		\item Client fordert die Trennung der Verbindung
+		\item Server schließt die Verbindung
+	\end{itemize}
+	\item \textbf{IMAP}: 
+	\begin{itemize}
+		\item Server begrüßt den Client
+		\item Client sendet Anmeldedaten und meldet sich an
+		\item Server bestätigt die Anmeldung
+		\item Client wählt einen Ordner als aktiv aus
+		\item Server sendet Informationen über diesen Ordner
+		\item Client fordert eine E-Mail an
+		\item Server sendet Inhalt der E-Mail
+		\item Client meldet sich ab
+		\item Server schließt die Verbindung
+	\end{itemize}
+\end{itemize}
+
+\subsection{Fazit}
+Die Aufgabe ist relativ simpel zu lösen, die drei Protokolle sind alle sehr gut dokumentiert und sehr leicht nachzuvollziehen. 
