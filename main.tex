@@ -2,6 +2,17 @@
 
 \input{preambel/fonts}
 \input{preambel/packages}
+
+\usepackage{parcolumns}
+\lstset{literate=%
+  {Ö}{{\"O}}1
+  {Ä}{{\"A}}1
+  {Ü}{{\"U}}1
+  {ß}{{\ss}}1
+  {ü}{{\"u}}1
+  {ä}{{\"a}}1
+  {ö}{{\"o}}1
+}
 \input{preambel/style}
 
 \addbibresource{appendix/Literatur.bib}
@@ -11,6 +22,7 @@
 	\tableofcontents
 	
 	\input{content/rest/01}
+	\input{content/rest/02}
 	
 	\newpage
 	\printbibliography
