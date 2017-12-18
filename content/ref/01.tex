@@ -1,0 +1,99 @@
+\newpage
+
+\section{Aufgabe 1}
+
+\subsection{Aufgabenstellung}
+Beschreiben Sie mit eigenen Worten und einer Skizze, wie Browser-Cookies funktionieren!
+(1 Punkt)
+
+\subsection{Vorbereitung}
+Für diese Aufgabe haben wir uns mit Browser-Cookies auseinander gesetzt.
+
+\subsection{Durchführung}
+Cookies werden verwendet, um Sitzungen auf Websites zu verwalten, virtuelle Einkaufswägen zu speichern oder Nutzerverhalten aufzuzeichnen.
+
+Im folgenden Beispiel ist ein Request für ein Cookie zu sehen.
+\begin{lstlisting}
+GET /cgi/suche.py?q=cookie+aufbau HTTP/1.0
+\end{lstlisting}
+
+Dazu gehörig findet man hier die Antwort auf diesen Request. Mit Set-Cookie wird der Cookie gesetzt. Als erstes findet man im Cookie die Nutzdaten. Diese Nutzdaten können einen eigenen Namen haben. Da die Nutzdaten Zeichen enthalten können welche nicht erlaubt sind ist der Bereich Base64 verschlüsselt. Unter \textbf{expires} findet man heraus bis zu welchem Datum der Cookie gültig ist. Im Bereich \textbf{Max-Age} wird in Sekunden angegeben wie lange der Cookie mitgeschickt wird. Zu guter Letzt findet man noch den Pfad des Cookies, welcher aber nur für Suchmaschinen relevant ist.
+\begin{lstlisting}
+HTTP/1.0 200 OK
+Set-Cookie: letzteSuche=Y29va2llIGF1ZmJhdQ==;
+			expires=Tue, 29-Mar-2014 19:30:42 GMT;
+			Max-Age=2592000;
+			Path=/cgi/suche.py
+\end{lstlisting}
+
+\subsection{Fazit}
+Cookies sind sehr simpel gehalten und für jedermann verständlich.
+
+\section{Aufgabe 2}
+
+\subsection{Aufgabenstellung}
+Formulieren Sie mindestens fünf Kurzfragen, die in Stichworten zu beantworten sind. Die Aufgaben sollen im Stil von Klausurfragen gestellt werden. Gerne dürfen Sie eine eigene Aufgabe zur UDP Prüfsumme und der Numerierung von TCP Paketen mit Sequenz- und ACK-Nr. entwerfen und lösen. Zur Ideenfindung beachten Sie auch den Artikel zum Thema Internet Peering, der Stoff aus Vorlesung Nr. 2 wiederholt und vertieft. (2 Punkte)
+
+\subsection{Vorbereitung}
+Erneutes überfliegen der Vorlesungsinhalte und Aufgaben.
+
+\subsection{Durchführung}
+
+\textbf{Wie lauten die 7 Schichten des OSI Modells?}
+\begin{itemize}
+	\item Application Layer
+	\item Presentation Layer
+	\item Session Layer
+	\item Transport Layer
+	\item Network Layer
+	\item Data Link Layer
+	\item Physical Layer
+\end{itemize}
+
+\textbf{Nennen Sie 5 wichtige Protokolle der Applikations Schicht.}
+\begin{itemize}
+	\item HTTP
+	\item FTP
+	\item SMTP
+	\item POP3
+	\item IMAP
+\end{itemize}
+
+\textbf{Erklären Sie Multicast.}
+\begin{itemize}
+	\item Ein Knoten spricht mit mehreren Knoten aus der Gruppe.
+	\item Kardinalität: 1:n
+\end{itemize}
+
+\textbf{Wie lauten die vier wichtigsten Funktionen von http?}
+\begin{itemize}
+	\item GET
+	\item POST
+	\item PUT
+	\item DELETE
+\end{itemize}
+
+\textbf{Was ist der wichtigste Unterschied zwischen TCP und UDP?}
+\begin{itemize}
+	\item Im Gegensatz zu TCP ist UDP ungerichtet.
+\end{itemize}
+
+\subsection{Fazit}
+Alle Fragen sind im Stil einer Klausur.
+
+\section{Aufgabe 4}
+
+\subsection{Aufgabenstellung}
+In der Vorlesung Nr. 4 (RMI und REST) wurden mögliche Anforderungen an Middlewaretechnologien
+genannt. Diese finden Sie in der Bewertung zum Thema RMI (Folien 21
+bis 23). Fuhren Sie die dortige Anforderungsanalyse für REST durch. (3 Punkte) 
+
+\subsection{Vorbereitung}
+Vertrautmachen mit der oben genannten Vorlesung.
+
+\subsection{Durchführung}
+
+\textbf{REST Performance}
+
+
+
