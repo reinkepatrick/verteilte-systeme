@@ -1,0 +1,158 @@
+\newpage
+
+\section{Aufgabe 1}
+
+\subsection{Aufgabenstellung}
+Der Betreiber eines REST-Services legt individuell fest, wie dieser verwendet werden soll. Daher ist es nötig, dass ein Service genau dokumentiert wird.
+\begin{enumerate}[label=(\alph*)]
+\item Machen Sie sich mit der Openweather-Dokumentation vertraut : \url{https://openweathermap.org/api}
+
+\item Informieren Sie sich über das JSON-Format. Welche Vorteile bietet es gegenüber XML und wie ist ein JSON-Objekt aufgebaut?
+
+\item REST, bzw. auch RESTful sind keine einheitlichen Standards. In der Regel findet der Austausch über das http-Protokoll statt und fußt auf dessen bekannten Methoden. Wie lauten diese Methoden und wie werden diese verwendet?
+\end{enumerate}
+
+\subsection{Vorbereitung}
+Um diese Aufgabe lösen zu können muss man sich mit der API von OpenWeatherMap auseinandersetzen. Man muss sich mit den beiden Formaten XML und JSON vertraut machen und verstehen wie HTTP funktioniert.
+
+\subsection{Durchführung}
+\subsubsection{a) OpenWeatherMap-API}
+Die OpenWeatherMap-API ist nicht schwer aufgebaut, sie bietet drei Grundfunktionen. Sie bietet das aktuelle Wetter eines Ortes, das Wetter für 5 Tage für alle drei Stunden und das Wetter für 16 Tage für jeden Tag vorhergesagt. Sie bietet noch mehr Funktionalität, doch diese ist für unsere Aufgabe nicht relevant. Jeder API-Aufruf ist sehr ähnlich aufgebaut und sieht wie folgt aus:
+
+\begin{lstlisting}
+http://api.openweathermap.org/data/2.5/weather?id={cityid}&units=metric&appid={APIKEY}
+\end{lstlisting}
+
+Wir schauen uns jetzt mal diese Abfrage im Detail an.\\
+	\textbf{http://} -- Das ist die Angabe, welches Protokoll verwendet werden soll\\
+	\textbf{api.openweathermap.org} -- Die URL an welche der Request gesendet werden soll\\
+	\textbf{/data/2.5/weather} -- Der Pfad auf der URL, der verwendet werden soll\\
+	\textbf{?} -- Das Zeichen das nun Parameter folgen\\
+	\textbf{\&} -- Das Anhängen von einem weiterem Parameter\\
+	\textbf{id=\{cityid\}} -- Die Angabe der Stadt von der man die Daten haben möchte, als ID
+	\textbf{q=\{city name\},\{country code\}} -- Die Angabe der Stadt mit dem Namen und dem dazugehörigen Länderkürzel\\
+	\textbf{zip=\{zip code\},\{country code\}} -- Die Angabe der Stadt mit der Postleitzahl und dem dazugehörigen Länderkürzel\\
+	\textbf{units=metric} -- Damit wir die Daten als Celsius geliefert bekommen\\
+	\textbf{appid=\{APIKEY\}} -- Unser API-Key damit wir diese API nutzen können
+\newpage
+\subsubsection{b) XML vs. JSON}
+JSON bietet den Vorteil das es wesentlich weniger Text ist und somit auch direkt ressourcensparender. 
+\begin{parcolumns}{2}% 
+\colchunk{% 
+\begin{lstlisting} 
+{"employees":[
+    { "firstName":"John", "lastName":"Doe" },
+    { "firstName":"Anna", "lastName":"Smith" },
+    { "firstName":"Peter", "lastName":"Jones" }
+]}
+\end{lstlisting}% 
+} 
+\colchunk{% 
+\begin{lstlisting} 
+<employees>
+    <employee>
+        <firstName>John</firstName> <lastName>Doe</lastName>
+    </employee>
+    <employee>
+        <firstName>Anna</firstName> <lastName>Smith</lastName>
+    </employee>
+    <employee>
+        <firstName>Peter</firstName> <lastName>Jones</lastName>
+    </employee>
+</employees>
+\end{lstlisting}% 
+} 
+\end{parcolumns} 
+
+An diesem Beispiel kann man dies super sehen. Beide haben den selben Inhalt, doch die XML-Datei ist doppelt solang, wie die JSON-Datei. \\\\Der Aufbau einer JSON-Datei ist simpel, dieser könnte wie folgt aussehen:
+\begin{lstlisting} 
+{
+  "Herausgeber": "Xema",
+  "Nummer": "1234-5678-9012-3456",
+  "Deckung": 2e+6,
+  "Waehrung": "EURO",
+  "Inhaber":
+  {
+    "Name": "Mustermann",
+    "Vorname": "Max",
+    "maennlich": true,
+    "Hobbys": ["Reiten", "Golfen", "Lesen"],
+    "Alter": 42,
+    "Kinder": [],
+    "Partner": null
+  }
+}
+\end{lstlisting} 
+Als erstes Starten wir mit einem JavaScript-Object das wird mit den \textbf{\{\}} gekennzeichnet. Nun starten wir mit dem eigentlichen Inhalt, dieser starte immer einem Schlüssel dieser wird immer in Hochkommata geschrieben, dann kommt ein Doppelpunkt und zu guter Letzt kommt der Inhalt, dieser kann jegliche Art von JavaScript-Datentypen sein(\textit{String, Integer, Array, Boolean, Object oder null}).
+\newpage
+\subsubsection{c) HTTP-Protokoll}
+Wir zeigen die Verwendung den ganzen Methoden mit einer Beispiel Anfrage und Antwort.\\\\
+
+\textbf{GET} -- Diese Methode dient zum holen von Daten\\Als erstes gucken wir uns ein Beispiel an welches der Client sendet:
+\begin{lstlisting}
+GET /wiki/Katzen HTTP/1.1
+Host: de.wikipedia.org
+\end{lstlisting}
+Das erste was wir sehen ist die gewollte Methode, das \textbf{GET}. Nun kommt der Pfad an welche der Request gesendet werden soll, hier in unserem Fall kommt \textbf{/wiki/Katzen}, das letzte in dieser Zeile ist das Protokoll, welches bei uns \textbf{HTTP/1.1} ist. Als guter Letzt kommt nur noch der Host, der die Anfrage bekommt, hier \textbf{de.wikipedia.org}\\\\
+Die Antwort des Servers könnte auf dieses Request ungefähr so aussehen:
+\begin{lstlisting}
+HTTP/1.1 200 OK
+Date: Fri, 13 Jan 2006 15:12:48 GMT
+Last-Modified: Tue, 10 Jan 2006 11:18:20 GMT
+Content-Language: de
+Content-Type: text/html; charset=utf-8
+
+Die Katzen (Felidae) sind eine Familie aus der Ordnung der Raubtiere (Carnivora)
+innerhalb der Ueberfamilie der Katzenartigen (Feloidea).
+\end{lstlisting}
+Jetzt kommen wir zu der Antwort des Servers, der die Anfrage bekommen hat. Das erste was wir sehen ist das genutzte Protokoll, in unserem Fall \textbf{HTTP/1.1}, dahinter steht direkt der sogenannte Statuscode dieser gibt an wie diese Operation gelaufen ist, hier \textbf{200 OK}, dass bedeutet das alles gut gelaufen ist. Nun kommt das Datum an welchem der Request gesendet wurde und was das geholte zuletzt verändert wurde, dazu noch in welche Sprache es verfasst wurde und in welchem Format es zurückgeliefert wird. Zu guter Letzt noch der gewollte Inhalt oder eine Antwort bei anderen Requests.\\\\
+
+\textbf{POST} -- Um Daten dem Server zu schicken
+Der Aufbau ist sehr ähnlich zu dem vom GET-Request nur das man Daten dazu schickt.
+\begin{lstlisting}
+POST / HTTP/1.1
+Host: foo.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 13
+
+say=Hi&to=Mom
+\end{lstlisting}
+Selber Aufbau wie beim GET, nur dass es einen Content-Type gibt der angibt welches das Übergebende für ein Format hat. Jetzt wird noch die Länge das Contents. Nun kommt nur noch die Übergabe der Parameter. \\\\
+
+Die Antwort sieht genauso aus wie unter GET, nur ist der Content in den meisten Fällen eine Antwort, ob es funktioniert hat oder nicht, wenn nicht, warum nicht.\\\\
+
+\textbf{PUT} -- Dient dazu Dateien an den Server zusenden oder Daten zu ändern
+\begin{lstlisting}
+PUT /new.html HTTP/1.1
+Host: example.com
+Content-type: text/html
+Content-length: 16
+
+<p>New File</p>
+\end{lstlisting}
+Der Aufbau ist der selbe wie unter einem POST Request, nur das dieser als Content-Type angibt, welcher Dateityp die Datei ist und der eigentliche Content ist die Datei.\\\\Die Antwort vom Server könnte wie folgt aussehen:
+\begin{lstlisting}
+HTTP/1.1 201 Created
+Content-Location: /new.html
+\end{lstlisting}
+Als Antwort bekommen wir wieder das Protokoll und einen Statuscode. Den Pfad wo diese Datei nun liegt bekommen wir dazu.\\\\
+
+\textbf{DELETE} -- Zum löschen von Daten oder Dateien am Server
+\begin{lstlisting}
+DELETE /file.html HTTP/1.1
+\end{lstlisting}
+Der Aufbau hier ist simpel, wir haben die Methode, dann die Datei welche gelöscht werden soll und zu guter Letzt das genutzte Protokoll.\\\\Die Antwort könnte wie folgt aussehen:
+\begin{lstlisting}
+HTTP/1.1 200 OK 
+Date: Wed, 21 Oct 2015 07:28:00 GMT
+
+<html>
+  <body>
+    <h1>File deleted.</h1> 
+  </body>
+</html>
+\end{lstlisting}
+Die Rückgabe ist sehr ähnlich mit der von den Anderen.
+
+\subsection{Fazit}
+Die Aufgabe war leicht zu lösen, da es einfach eine Recherche war.
