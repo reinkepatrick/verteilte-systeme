@@ -49,7 +49,6 @@ Erneutes überfliegen der Vorlesungsinhalte und Aufgaben.
 	\item Data Link Layer
 	\item Physical Layer
 \end{itemize}
-
 \textbf{Nennen Sie 5 wichtige Protokolle der Applikations Schicht.}
 \begin{itemize}
 	\item HTTP
@@ -58,13 +57,11 @@ Erneutes überfliegen der Vorlesungsinhalte und Aufgaben.
 	\item POP3
 	\item IMAP
 \end{itemize}
-
 \textbf{Erklären Sie Multicast.}
 \begin{itemize}
 	\item Ein Knoten spricht mit mehreren Knoten aus der Gruppe.
 	\item Kardinalität: 1:n
 \end{itemize}
-
 \textbf{Wie lauten die vier wichtigsten Funktionen von http?}
 \begin{itemize}
 	\item GET
@@ -72,7 +69,6 @@ Erneutes überfliegen der Vorlesungsinhalte und Aufgaben.
 	\item PUT
 	\item DELETE
 \end{itemize}
-
 \textbf{Was ist der wichtigste Unterschied zwischen TCP und UDP?}
 \begin{itemize}
 	\item Im Gegensatz zu TCP ist UDP ungerichtet.
@@ -80,6 +76,35 @@ Erneutes überfliegen der Vorlesungsinhalte und Aufgaben.
 
 \subsection{Fazit}
 Alle Fragen sind im Stil einer Klausur.
+
+\section{Aufgabe 3}
+
+\subsection{Aufgabenstellung}
+Entwickeln Sie eine kurze Programmieraufgabe (Frage und Lösung dazu). Diese Aufgabe soll einen Teilbereich Ihrer Wahl aus dem bisher behandelten Vorlesungsstoff abdecken. (2 Punkte)
+
+\subsection{Vorbereitung}
+Für diese Aufgabe muss man sich mit den bisher behandelten Vorlesungsstoff auseinandersetzen. 
+
+\subsection{Durchführung}
+
+\subsubsection{Frage}
+Sie haben ein RESTful API die unter folgender URL zu erreichen ist \textit{http://restapi.de}, über diese API möchten sie sich die aktuelle Uhrzeit beschaffen, diese gibt sie einfach als Zeichenkette zurück, nicht als JSON und auch nicht als XML. Wie könnte diese Anfrage aussehen unter der Verwendung von Java?
+
+\subsubsection{Antwort}
+\begin{lstlisting}
+try {
+	URL u = new URL('http://restapi.de');
+	HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+	conn.setRequestMethod("GET");
+	BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	String output;
+	while ((output = reader.readLine()) != null) {
+		return output;
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}
+\end{lstlisting}
 
 \section{Aufgabe 4}
 
@@ -89,11 +114,8 @@ genannt. Diese finden Sie in der Bewertung zum Thema RMI (Folien 21
 bis 23). Fuhren Sie die dortige Anforderungsanalyse für REST durch. (3 Punkte) 
 
 \subsection{Vorbereitung}
-Vertrautmachen mit der oben genannten Vorlesung.
+Vertraut machen mit der oben genannten Vorlesung.
 
 \subsection{Durchführung}
-
 \textbf{REST Performance}
-
-
 
