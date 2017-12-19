@@ -12,6 +12,12 @@ Für diese Aufgabe haben wir uns mit Browser-Cookies auseinander gesetzt.
 \subsection{Durchführung}
 Cookies werden verwendet, um Sitzungen auf Websites zu verwalten, virtuelle Einkaufswägen zu speichern oder Nutzerverhalten aufzuzeichnen.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6 \linewidth]{images/cookies}
+	\caption{Verlauf von Cookies} \label{ordner}
+\end{figure} 
+
 Im folgenden Beispiel ist ein Request für ein Cookie zu sehen.
 \begin{lstlisting}
 GET /cgi/suche.py?q=cookie+aufbau HTTP/1.0
@@ -106,6 +112,9 @@ try {
 }
 \end{lstlisting}
 
+\subsection{Fazit}
+Die Aufgabe gab keine Probleme und sie war leicht zu lösen.
+
 \section{Aufgabe 4}
 
 \subsection{Aufgabenstellung}
@@ -118,4 +127,25 @@ Vertraut machen mit der oben genannten Vorlesung.
 
 \subsection{Durchführung}
 \textbf{REST Performance}
+
+\section{Aufgabe 5} 
+
+\subsection{Aufgabenstellung}
+Gegeben ist folgender Screenshot aus der Windows Systemsteuerung. Erklären Sie die Einstellungen. Zeichnen Sie das Diagramm eines kleinen Firmennetzwerkes, in dem mehrere Rechner, ein Router und ein Drucker verbunden sind (analog zu Folie 55 in Vorlesung 5). Der Screenshot zeigt die Konfiguration eines Rechners in diesem Netz. Welchen Weg nehmen Pakete, die von einem Rechner zum Drucker gesendet werden? Welchen Weg nehmen Pakete, die in das Internet geleitet werden sollen? (2 Punkte)
+
+\subsection{Vorbereitung}
+Für diese Aufgabe muss man sich mit der neusten Vorlesung auseinandersetzen oder selbst recherchieren.
+
+\subsection{Durchführung}
+Die Verbindung vom Rechner mit dem Drucker, kommt über den Router zustande, er verbindet die beiden. Der Rechner in unserem Beispiel hat eine fest IP-Adresse und wir gehen in unserem Fall davon aus das der Router eine IP-Adresse für den Drucker bereitstellt, über DHCP. Jetzt stellt der Computer eine Verbindung auf mit dem Drucker, meistens über Freigabename, der Router kennt diesen, teilt diesen mit dem Computer verbindet die beiden.\\\\Die Verbindung zwischen dem Computer und Internet ist da ziemlich unterschiedlich, der Rechner ruft z.B. eine Webseite auf, kennt dort nur den FQDN und gibt diesen an den Router weiter. Dieser gibt diesen FQDN an einen, an ihm eingestellten, DNS-Server weiter, welcher ihm eine IP-Adresse zurückliefert und diese Daten die er von dieser IP-Adresse bekommt übers HTTP-Protokoll gibt er an den Rechner zurück. Als Grafik siehe \autoref{internet}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6 \linewidth]{images/internet}
+	\caption{Verbindungen} \label{internet}
+\end{figure}  
+
+\subsection{Fazit}
+Diese Aufgabe war umfangreicher als die anderen Aufgaben, war aber auch etwas schwieriger.
+
 
