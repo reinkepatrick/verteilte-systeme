@@ -89,7 +89,7 @@ Alle Fragen sind im Stil einer Klausur.
 Entwickeln Sie eine kurze Programmieraufgabe (Frage und Lösung dazu). Diese Aufgabe soll einen Teilbereich Ihrer Wahl aus dem bisher behandelten Vorlesungsstoff abdecken. (2 Punkte)
 
 \subsection{Vorbereitung}
-Für diese Aufgabe muss man sich mit den bisher behandelten Vorlesungsstoff auseinandersetzen. 
+Für diese Aufgabe muss man sich mit den bisher behandelten Vorlesungsstoff auseinandersetzen.
 
 \subsection{Durchführung}
 
@@ -120,13 +120,58 @@ Die Aufgabe gab keine Probleme und sie war leicht zu lösen.
 \subsection{Aufgabenstellung}
 In der Vorlesung Nr. 4 (RMI und REST) wurden mögliche Anforderungen an Middlewaretechnologien
 genannt. Diese finden Sie in der Bewertung zum Thema RMI (Folien 21
-bis 23). Fuhren Sie die dortige Anforderungsanalyse für REST durch. (3 Punkte) 
+bis 23). Fuhren Sie die dortige Anforderungsanalyse für REST durch. (3 Punkte)
 
 \subsection{Vorbereitung}
 Vertraut machen mit der oben genannten Vorlesung.
 
 \subsection{Durchführung}
-\textbf{REST Performance}
+\subsubsection{REST Performance}
+\begin{itemize}
+	\item REST basiert auf HTTP
+	\item Minimaler Überhang über HTTP
+	\item REST basiert also auf PUT, GET, POST und DELETE
+	\item Für jeden Service wird also eine URL erzeugt
+	\item Jede Ressource wird über eine logische URL angesprochen
+	\item Wichtigster Einfluss auf die Performance ist die Cachefähigkeit
+\end{itemize}
+
+\subsubsection{REST Bewertung}
+\textbf{Anforderung "Netzwerkunabhängigkeit"}
+\begin{itemize}
+	\item Clients und Server sollten ohne Änderungen auf unterschiedlichen Netzwerktypen arbeiten können.
+\end{itemize}
+Bewertung REST:
+\begin{itemize}
+	\item REST beruht auf HTTP und kann daher mit TCP/IP umgehen
+\end{itemize}
+
+\textbf{Anforderung "Rechner-/Betriebssystem-Portabilität":}
+\begin{itemize}
+	\item Clients und Server sollten ohne Änderungen (außer ggf. Neukompilierung) mit verschiedenen Rechnern und Betriebssystemen arbeiten.
+\end{itemize}
+Bewertung REST:
+\begin{itemize}
+	\item REST ist mit jedem HTTP-fähigen Client kompatibel
+\end{itemize}
+
+\textbf{Anforderung "Portabilität bezüglich der Programmiersprache":}
+\begin{itemize}
+	\item Clients und Server sollen sich verstehen, auch wenn sie mit unterschiedlichen Programmiersprachen entwickelt wurden.
+\end{itemize}
+Bewertung REST:
+\begin{itemize}
+	\item Nicht auf Programmiersprachen beschränkt
+\end{itemize}
+
+\textbf{Anforderung "Transparente Nutzung":}
+\begin{itemize}
+	\item Programmierer sollen Dienste auf entfernten Rechnern wie lokale Operationen (Transparenz) nutzen können.
+\end{itemize}
+Bewertung REST:
+\begin{itemize}
+	\item Weitestgehend transparent dank nachvollziehbarer und logischer Ressourcen
+\end{itemize}
 
 \section{Aufgabe 5} 
 
@@ -147,5 +192,3 @@ Die Verbindung vom Rechner mit dem Drucker, kommt über den Router zustande, er 
 
 \subsection{Fazit}
 Diese Aufgabe war umfangreicher als die anderen Aufgaben, war aber auch etwas schwieriger.
-
-
