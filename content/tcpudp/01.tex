@@ -1,0 +1,94 @@
+\newpage
+
+\section{Aufgabe 1}
+
+\subsection{Aufgabenstellung}
+In dieser Aufgabe soll eine Applikation bestehend aus Client und Server auf Basis von Sockets für den Transfer von Dateien zwischen Rechnern implementiert werden. Der Datentransfer soll dabei in Datenblöcken (Chunks) festgelegter Größe erfolgen. Die Größe der Chunks wird zu Anfang der Kommunikation durch den Client festgelegt. Der Ablauf soll durch das folgende Protokoll festgelegt werden:
+a) Der Client initiiert den Transfer. Als Parameter wird der Name der Datei eingegeben, die vom Server zum Client zu transferieren ist. Der Client sendet dazu eine Nachricht: INITX;<chunk size>;<filename> an den Server. Hierin gibt <chunk size> die Größe der transferierten Datenblöcke in Bytes an.
+b) Kann ein Transfer nicht initiiert werden oder tritt während des Transfers ein Fehler auf, so wird an den aufrufenden Prozess eine Fehlermeldung (ERROR;<reason>) ausgegeben.
+c) Der Client sendet nun iteriert Anfragen der Art GET an den Server. Der Server sendet daraufhin die Pakete vereinbarter Größe zurück. Diese werden mit einem Prefix DATA;<data> versehen ( <data> sind die transferierten Daten). Die Daten werden durch den Client gelesen und in einer Datei gespeichert. Da die Größe der Chunks bei den GET Nachrichten nicht mitgeschickt wird, muss im Server eine Zuordnung dieses Wertes mit gespeichert werden. Realisieren Sie die o.g. Funktionen in Form eines TCP-Servers und eines Clients. Achtung: beachten Sie das beigefügte Ablaufdiagramm!
+Zur Vereinfachung können Sie die folgenden Annahmen treffen:
+• Die Anwendung soll auf Port 8999 laufen.
+• Es müssen lediglich Textdateien transferiert werden können.
+• Es kann davon ausgegangen werden, dass Client und Server jeweils ein festes Arbeits- verzeichnis verwalten, aus dem Dateien gelesen (Server) und in das die übertragenen Dateien (Client) geschrieben werden. Es müssen also keine Pfade hinsichtlich der zu transferierenden Dateien angegeben werden.
+• Achten Sie bei der Implementierung auf eine Behandlung der Fehlerfälle, die durch Nachrichten vom Typ ERROR signalisiert werden.
+
+\subsection{Vorbereitung}
+Dokumentationen zu Javasockets und TCP-Übertragungen lesen.
+
+\subsubsection{Durchführung}
+Zunächst sehen wir uns den Server an. Der Server kümmert sich um die Annahme und Verwalten von Verbindungen und stell somit auch die zur Verfügung stehenden Dateien bereit.
+
+Eine \textbf{INITX} Nachricht von einem Client löst den folgednen Code aus. Die Größe der Chunks, sowie der Name der zu übertragenden Datei wird gespeichert und der Client bekommt das \textbf{OK} für den Start der Datenübertragung. Desweiteren wird auch der Inhalt der Datei gespeichert. Falls ein Fehler auftritt bekommt der Client \textbf{ERROR} zurück.
+\begin{lstlisting}
+if (arr.length == 3) {
+  chunksize = Integer.valueOf(arr[1]);
+  try {
+    content = readFile(arr[2]);
+    ret = "OK";
+  } catch (IOException e) {
+    ret = "ERROR;Can not open file!";
+    e.printStackTrace();
+  }
+}
+\end{lstlisting}
+
+In dem folgednen Abschnitt ist zu sehen wie die Datei eingelesen und gespeichert wird. Die Quelldatei wird im Ordner res/ liegen.
+\begin{lstlisting}
+private ArrayList<String> readFile(String file) throws IOException {
+  ArrayList<String> list = new ArrayList<>();
+  Stream<String> stream = Files.lines(Paths.get("res/" + file));
+  stream.forEach(list::add);
+  return list;
+}
+\end{lstlisting}
+
+Im Anschluss folgt nun noch die Datenübertragung bei der dieser folgende Abschnitt so lange wiederholt wird bist alle Daten übertragen wurden. Im Falle einer erfolgreichen Übertragung wir diese mit \textbf{FINISH} beendet.
+\begin{lstlisting}
+case "GET":
+  out.println("DATA;" + content.get(count++));
+  if (count >= content.size()) {
+    out.println("FINISH");
+    stop = true;
+  }
+  break;
+\end{lstlisting}
+
+Nun folgt die Implementierung des Clients.
+Hier ist zu sehen wie der Client die Verbindung zum Server aufbaut und die Initialisierungsnachricht \textbf{INIT} sendet.
+\begin{lstlisting}
+socket = new Socket(SERVER, PORT);
+OutputStream out = socket.getOutputStream();
+PrintStream ps = new PrintStream(out, true);
+ps.println("INITX;512;test.txt");
+\end{lstlisting}
+
+In diesem Beispiel sieht man wie der Client bei einer \textbf{OK}-Nachricht vom Server die Übertragung vorbereitet.
+\begin{lstlisting}
+String message = buff.readLine();
+if (!message.equals("OK")) {
+  System.out.println(message);
+} else {
+  transfer(buff, ps);
+}
+\end{lstlisting}
+
+Im folgenden ist zu sehen wie die ankommenden Nachrichten des Server untersucht und zugeordnet werden. Wenn die Nachricht Daten enthält werden diese gespeichert. Wenn sie einen Error enthält wird die Übertragung sofort gestoppt. Bei abgeschlossener Übertragung wird die Datei mit ihrem Inhalt erstellt.
+\begin{lstlisting}
+switch (input[0]) {
+  case "DATA":
+    response.add(input[1]);
+    break;
+  case "ERROR":
+    System.out.println(input[0] + input[1]);
+    stop = true;
+  break;
+  case "FINISH":
+    Files.write(Paths.get("test.txt"), response, Charset.forName("UTF-8"));
+    stop = true;
+  break;
+}
+\end{lstlisting}
+
+\subsection{Fazit}
+Bei unserer Implementierung fehlt das Einteilen in kleinere Blöcke.
