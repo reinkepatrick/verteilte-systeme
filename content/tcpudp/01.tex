@@ -16,7 +16,7 @@ Zur Vereinfachung können Sie die folgenden Annahmen treffen:
 \subsection{Vorbereitung}
 Dokumentationen zu Javasockets und TCP-Übertragungen lesen.
 
-\subsubsection{Durchführung}
+\subsection{Durchführung}
 Zunächst sehen wir uns den Server an. Der Server kümmert sich um die Annahme und Verwalten von Verbindungen und stell somit auch die zur Verfügung stehenden Dateien bereit.
 
 Eine \textbf{INITX} Nachricht von einem Client löst den folgednen Code aus. Die Größe der Chunks, sowie der Name der zu übertragenden Datei wird gespeichert und der Client bekommt das \textbf{OK} für den Start der Datenübertragung. Desweiteren wird auch der Inhalt der Datei gespeichert. Falls ein Fehler auftritt bekommt der Client \textbf{ERROR} zurück.
@@ -91,4 +91,197 @@ switch (input[0]) {
 \end{lstlisting}
 
 \subsection{Fazit}
-Bei unserer Implementierung fehlt das Einteilen in kleinere Blöcke.
+Bei unserer Implementierung fehlt das Einteilen in kleinere Blöcke. Da wir Probleme mit dieser Funktion hat und wir nicht wussten wie wir das lösen sollen, wir teilen deswegen in Zeilen.
+
+
+\section{Aufgabe 2}
+
+\subsection{Aufgabenstellung}
+Realisieren Sie die o.g. Anwendung verbindungslos per UDP.
+Hinweis: Warum ist es im Hinblick auf eine äquivalente Funktionalität nicht aus- reichend nur die Socket-Klasse auszutauschen?
+
+\subsection{Vorbereitung}
+Für diese Aufgabenstellung wird keine Vorbereitung nötig.
+
+\subsection{Durchführung}
+Wir fangen als erstes mit dem Client an und kümmern uns um die Verbindung, versenden und empfangen von Daten. 
+
+\subsubsection{Client}
+Als erstes definieren wir Variablen, dort definieren wir den Server-Port, die Größe der Chunks in die geteilt werden soll, wir müssen ebenfalls noch den Host angeben und die Dateien von welcher in welche geschrieben werden soll. Und die maximale Große des zu sendende Paktes. 
+
+\begin{lstlisting}
+private final static int SOCKET_PORT = 8999;
+private final static int chunkSize = 8;
+private final static String SERVER_HOST = "localhost";
+private final static String FILE_CLIENT = "res/client_udp.txt";
+private final static String FILE_SERVER = "res/server_udp.txt";
+private final static int MAX_SIZE = 1024;
+\end{lstlisting}
+
+Nun kümmern wir uns um die Verbindung mit dem Server und instanziieren der nötigen Variablen. 
+
+\begin{lstlisting}
+DatagramSocket clientSocket = new DatagramSocket();
+InetAddress IPAddress = InetAddress.getByName(SERVER_HOST);
+byte[] sendData;
+byte[] receiveData = new byte[MAX_SIZE];
+String initMessage = "INITX;" + chunkSize + ";" + FILE_SERVER;
+sendData = initMessage.getBytes();
+DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, SOCKET_PORT);
+clientSocket.send(sendPacket);
+\end{lstlisting}
+
+Wir benutzen zwei Arrays, einmal fürs senden und empfangen der Daten. Wir haben eine Initialisierungs-Nachricht, in dieser geben wir INITX an, die Chunkgröße und die Datei in die wir schreiben möchten und senden diese an den Server.
+
+Nun teilen wir die Antwort vom Server in Stücke.
+
+\begin{lstlisting}
+DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+clientSocket.receive(receivePacket);
+String response = new String(receivePacket.getData()).trim();
+String[] received = response.split(";");
+\end{lstlisting}
+
+Nun überprüfen wir ob der Server die Datei gefunden hat
+
+\begin{lstlisting}
+if (received[0].equals("OK")) {
+\end{lstlisting}
+
+Nun empfange so lange Daten bis der Server uns ein \textbf{ERROR} gibt oder ein \textbf{FINISH}. 
+
+\begin{lstlisting}
+do {
+	...
+} while (!received[0].equals("FINISH") && !received[0].equals("ERROR"));
+\end{lstlisting}
+
+Nun kommen wir zum empfangen die eigentlichen Daten. 
+
+\begin{lstlisting}
+System.out.println("Sending GET-Request to server");
+sendData = "GET".getBytes();
+sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, SOCKET_PORT);
+clientSocket.send(sendPacket);
+receiveData = new byte[MAX_SIZE];
+receivePacket = new DatagramPacket(receiveData, receiveData.length);
+clientSocket.receive(receivePacket);
+response = new String(receivePacket.getData()).trim();
+received = response.split(";");
+if (received[0].equals("DATA")) {	// DATA-Block erhalten
+	System.out.println("got data: " + received[1]);
+	encodedContent += received[1];
+} else if (received[0].equals("FINISH")) {
+	System.out.println("Transferring file successful!");
+	byte[] decodedContent = Base64.getDecoder().decode(encodedContent);
+	String fileContent = new String(decodedContent);
+	File outputFile = new File(FILE_CLIENT);
+	Files.write(outputFile.toPath(), fileContent.getBytes());
+} else {
+	System.out.println("Unknown prefix in response: " + received[0] + ";" + (received.length > 1 ? received[1] : "No Error-Description"));
+}
+\end{lstlisting}
+
+Wir senden nur solange eine GET-Anfrage bis wir keine Daten mehr bekommen und wenn wir keine mehr bekommen, schreiben wir diese in eine Datei.
+
+\subsubsection{Server}
+Nun kümmern wir uns um den Server, also um das spliten, also das empfangen und senden von Daten.
+
+\begin{lstlisting}
+DatagramSocket serverSocket = new DatagramSocket(SOCKET_PORT);
+byte[] receiveData = new byte[Client.getMAX_SIZE()];
+byte[] sendData;
+DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+serverSocket.receive(receivePacket);
+InetAddress IPAddress = receivePacket.getAddress();
+int port = receivePacket.getPort();
+String requestINITX = new String(receivePacket.getData());
+String[] received = requestINITX.split(";");
+String requestedFile = received[2].trim();
+File file = new File(requestedFile);
+\end{lstlisting}
+
+Wir hören nun auf dem angegebenen Port und erstellen wir beim Client zwei Arrays zum empfangen und gesendeten Daten. Wir erstellen die Datei in die geschrieben werden soll und stellen unseren Server zur Verfügung.
+
+Nun überprüfen wir noch ob diese Datei schon existiert.
+  
+\begin{lstlisting}
+if (file.exists()) {
+	...
+}
+\end{lstlisting}
+
+Holen nun die gewollte Chunkgröße, lesen die Datei ein und kodieren den Dateiinhalt.
+
+\begin{lstlisting}
+int chunkSize = Integer.parseInt(received[1]);
+System.out.println("got file request: " + requestedFile + " chunkSize:" + chunkSize);
+List<String> fileContent = Files.readAllLines(file.toPath());
+String answerString = "";
+for (String s : fileContent) {
+	answerString += s + System.lineSeparator();
+}
+String encodedString = Base64.getEncoder().encodeToString(answerString.getBytes());
+\end{lstlisting}
+
+Jetzt senden wir dem Client noch eine OK Status Nachricht.
+
+\begin{lstlisting}
+sendData = "OK;File found on system, starting transfer".getBytes();
+DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+serverSocket.send(sendPacket);
+\end{lstlisting}
+
+Nun teilen den Dateiinhalt in Fragmente in Größe der gewollten Chunks.
+
+\begin{lstlisting}
+for (int i = 0; i < encodedString.length(); i+= chunkSize) {
+	receiveData = new byte[Client.getMAX_SIZE()];
+	receivePacket = new DatagramPacket(receiveData, receiveData.length);
+	serverSocket.receive(receivePacket);
+	String requestGET = new String(receivePacket.getData()).trim();
+	if (requestGET.equals("GET") ) {
+		String data = "DATA;";
+		for (int j = i;j < i + chunkSize; j++) {
+			if (j < encodedString.length()) {
+				data += encodedString.charAt(j);
+			}
+		}
+		sendData = data.getBytes();
+		sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+		serverSocket.send(sendPacket);
+	} else {
+		System.out.println("Expected GET-Request but got: " + requestGET);
+		sendData = "ERROR;400".getBytes();
+		sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+		serverSocket.send(sendPacket);
+     }
+}
+\end{lstlisting}
+
+Wir loopen das ganze mit einer for-Schleife und iterieren in der Größe der Chunks über das Array. und empfangen die Daten. Sollten wir ein GET bekommen, senden wir Daten der jeweiligen Größe zurück. 
+
+Sollte die Übertragen fertig sein, senden wir ein Finish an den Client um ihn zu sagen das wir fertig sind und schließen die Verbindung.
+
+\begin{lstlisting}
+receiveData = new byte[Client.getMAX_SIZE()];
+receivePacket = new DatagramPacket(receiveData, receiveData.length);
+serverSocket.receive(receivePacket);
+String request = new String(receivePacket.getData()).trim();
+if (request.equals("GET")) {
+	sendData = "FINISH;Transfer successful".getBytes();
+	System.out.println("File has been sent successful");
+} else {
+    sendData = "ERROR;400".getBytes();
+	System.out.println("Expected GET-Request but got: " + request);
+}
+sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+serverSocket.send(sendPacket);
+           	
+...
+
+serverSocket.close();
+\end{lstlisting}
+
+\subsection{Fazit}
+Bei dieser Aufgabe gab es keine Probleme.
