@@ -53,4 +53,34 @@ Wir nutzen für diese Aufgabe das Programm welches über das UDP-Protokoll arbei
 \end{figure} 
 
 \subsubsection{d)}
-
+Wir analysieren nun den die Anfrage vom Client zum Server und seine Reaktion darauf. Als erstes stellen wir fest, wie wir erfahren was der Client schickt und was der Server schickt. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6 \linewidth]{images/w06}
+	\caption{Erste Nachricht} \label{ordner}
+\end{figure} 
+Hier erkennen wir das es der Client ist daran das der \textit{Source Port} nicht 8999 ist sondern das ist Ziel ist und wir wissen das der Server auf 8999 arbeitet. Ebenfalls sehen wir das der Client, \textbf{INITX} sendet, die gewollte Größe des Chunks und den Dateinamen mit sendet. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6 \linewidth]{images/w07}
+	\caption{Server Response} \label{ordner}
+\end{figure} 
+Hier erkennen wir den Server daran das der \textit{Source Port} 8999 ist. Wir sehen noch das was der Server zurück gibt. Er gibt ein \textit{OK} zurück und eine Nachricht für den Client.\\\\Als nächstes Fragt der Client nach die Daten mit einem \textit{GET} und der Server wird ihn diese drauf zusenden.
+\begin{figure}[H]
+	\begin{minipage}[b]{.5 \linewidth}
+		\centering
+		\includegraphics[width=.95 \linewidth]{images/w08}
+		\caption{GET-Request des Clients}
+	\end{minipage}
+	\begin{minipage}[b]{.5 \linewidth}
+		\centering
+		\includegraphics[width=.95 \linewidth]{images/w09}
+		\caption{DATA-Response vom Server}
+	\end{minipage}
+\end{figure}
+Der Server sendet ihm die Daten solange zu bis diese fertig gesendet wurden und sendet dann ein \textbf{FINISH}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6 \linewidth]{images/w10}
+	\caption{FINISH-Response} \label{ordner}
+\end{figure} 
