@@ -1,0 +1,53 @@
+\section{Aufgabe 3}
+
+\subsection{Aufgabenstellung}
+Diese Aufgabe können Sie wahlweise zuhause mit Hilfe virtueller Maschinen bzw. in Ihrem eigenen Netzwerk ausprobieren. Alternativ verwenden Sie die Rechner im Labor D109.
+a) Sehen Sie sich an, wie die Rechner mit dem Switch verbunden sind.
+b) Sehen Sie sich mit dem Kommando arp -a den Inhalt des ARP-Caches Ihres Rechners an. Stellen Sie sicher,dass der Cache leer ist .Löchen Sie ggf. mit dem Kommando arp -d <hostname> (Linux) den ARP-Cache ihres Rechners (unter Windows genügt ein arp -d).
+c) Starten Sie das Wireshark und stellen Sie nun in einen neuen Capture-Filter mit dem Namen ARP und dem Filter- String arp or icmp ein und starten Sie ein neues Capturing. Führen Sie dann einen Ping (ping -c 1) auf einen Rechner in Ihrem lokalen Netz aus. Betrachten Sie die ersten beiden Frames und tragen Sie die folgenden Informationen in die Tabelle ein:
+Um welche Art von Frames handelt es sich hier? Halten Sie nach das Capturing nach Ein- treffen des ICMP-Frames Ihres Ping-Kommandos an.
+d) Überprüfen Sie mit dem Kommando arp -a den Inhalt des ARP-Caches Ihres Rechners. Welche MAC-Adresse besitzt der Webserver?
+e) Starten Sie ein neues Capturing unter Verwendung des gleichen Filters auf demselben Interface. Führen Sie nun nochmals einen Ping für den Webserver aus. Wie viele Frames zeigt Wireshark an?
+Betrachten Sie die ersten beiden Frames und füllen Sie die Felder in der folgenden Tabelle aus:
+Betrachten Sie die ICMP-Header der beiden Frames. Anhand welchen Feldes kann der PC einem versendeten Echo-Request-Frame einen empfangenen Echo-Reply-Frame zuordnen?
+f) Überprüfen Sie den Inhalt des ARP-Caches zyklisch über einen Zeitraum von max. 15 Minuten. Sofern Sie zwischenzeitlich nicht auf den Router/Praktikumsserver zugreifen: wann verschwindet der Eintrag aus dem ARP-Cache? Warum wird dieser gelöscht?
+
+\subsection{Vorbereitung}
+Für diese Aufgabe wird eine Installation von Wireshark benötigt und 2 Rechner. Auf einem dieser beiden Rechner läuft Windows 10(192.168.2.102), auf dem anderen Mac OSX High Sierra 10.13.2(192.168.2.104).
+
+\subsection{Durchführung}
+a) Der Windows-PC ist per Lankabel verbunden, der Mac hingegen mit Wlan.
+
+b) Da auf dem Mac gearbeitet wird sehen wir uns den ARP-Cache per \textbf{arp -a} an und löschen anschließend den kompletten Cache mit \textbf{arp -d -a}
+
+c) Wir legen den neuen Capture-Filter \textbf{ARP} an und führen den Ping aus.
+\begin{center}
+    \begin{tabular}{| l | l | l | l | l | l |}
+    \hline
+    Frame & OPCode & MAC-Adr.(Sender) & IP-Adr.(Sender) & MAC-Adr.(Empfänger) & IP-Adr.(Empfänger) \\ \hline
+    1 & request(1) & 98:01:a7:d2:cd:eb & 192.168.2.104 & 00:00:00:00:00:00 & 192.168.2.1 \\ \hline
+    2 & reply(2) & ac:cf:85:31:0a:57 & 192.168.2.1 & 98:01:a7:d2:cd:eb & 192.168.2.104 \\ \hline
+    \end{tabular}
+\end{center}
+Es handelt sich um eine Broadcastnachricht, welche im Netzwerk nach dem Client mit der IP 192.168.2.102 fragt. Er bekommt eine Antwort vom Router.
+
+d) Nach dem Ping steht folgender Eintrag im ARP-Cache:
+\begin{lstlisting}
+desktop-e4c55h0 (192.168.2.102) at 44:8a:5b:9e:23:f6 on en0 ifscope [ethernet]
+\end{lstlisting}
+
+e) Wir führen erneut einen Ping aus.
+\begin{center}
+    \begin{tabular}{| l | l | l | l | l |}
+    \hline
+    Frame & MAC-Adr.(Ziel) & MAC-Adr.(Quelle) & IP-Adr.(Ziel) & IP-Adr.(Quelle) \\ \hline
+    1 & 44:8a:5b:9e:23:f6 & 98:01:a7:d2:cd:eb & 192.168.2.102 & 192.168.2.104 \\ \hline
+    2 & 98:01:a7:d2:cd:eb & 44:8a:5b:9e:23:f6 & 192.168.2.104 & 192.168.2.102 \\ \hline
+    \end{tabular}
+\end{center}
+Die Zuordnung von Anfrage und Antwort erfolgt über einen "Identifier" im TCMP-Header. In unserem Fall war dieser 0x0790c.
+
+f) Auch nach längerem Warten befand sich der Eintrag noch immer im ARP-Cache. Im Normalfall werden die Einträge nach kurzer Zeit ohne Verwendung gelöscht, da die Möglichkeit besteht, dass ein Gerät aus dem Netzwerk entfernt wurde oder sich IP- oder MAC-Adresse geändert haben.
+
+\subsection{Fazit}
+Wir sind uns bei Aufgabenteil C nicht ganz sicher ob der Ping über den Router gehen soll. Wir vermuten das hängt damit zusammen, dass der Mac per Wlan direkt mit dem Router verbunden ist und der PC deswegen die IP des Routers bekommt und nicht direkt die des Macs.
