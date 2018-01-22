@@ -1,0 +1,41 @@
+\section{Aufgabe 2}
+\subsection{Aufgabenstellung}
+\begin{enumerate}[label=(\alph*)]
+	\item Bestimmen Sie zunächst mit dem Kommando ifconfig die IP-Adresse Ihres Rechners, per Befehl route die des Default-Routers.
+	\item Setzen Sie den Wireshark-Filter so, dass nur derjenige HTTP- und !DNS-Verkehr aufgezeichnet wird, der für ihren Rechner bestimmt ist bzw. von diesem versendet wird. Tragen Sie hierzu als Capture-Filter ein:\\\textbf{(tcp port http or udp port 53) and host <IP-Adr. des Rechners>}
+	\item Löschen Sie den DNS-Cache Ihres Rechners (unter Windows mit dem Kommando ipconfig /flushdns). Finden Sie heraus, wie Sie mit dem von Ihnen verwendeten Betriebs- system den DNS-Cache löschen. Löschen Sie den DNS-Cache.
+Deaktivieren Sie in Wireshark die relative TCP-Byte-Numerierung, die defaultmäßig ein- geschaltet ist, um die Original-Bytenumerierung im TCP-Protokoll zu sehen. Wählen Sie hierzu Edit -> Preferences -> Protocols -> TCP und deaktivieren dort die Option ”Relative Sequence Numbers and Window Scaling“.
+	\item Öffnen Sie nun den Browser auf Ihrem PC. Nachdem das Laden der Startseite beendet ist, aktivieren Sie die Paketaufzeichnung mit Wireshark. Geben Sie im Browser folgende Adresse ein: \url{http://www.heise.de} Warten Sie, bis die Seite geladen wurde und beenden Sie dann die Wireshark-Aufzeichnung.
+	\item Analysieren Sie die aufgezeichneten Pakete. Identifizieren Sie die Pakete, die zu DNS und die zu HTTP gehören. Weshalb ist vor dem HTTP-Nachrichtenaustausch eine DNS-Abfrage erforderlich?
+	\item Welche Werte werden auf der Transportschicht sowie der Netzwerkschicht zur Identifikation von Kommunikationspartnern bzw. Diensten verwendet? Welche dieser Werte sind festgelegt und welche werden von der Anwendung gewählt? Aus welchem Zahlenbereich stammen die frei gewählten Werte?
+	\item Auf Ebene der IP-Kommunikation wird im IP-Header gespeichert, welches Protokoll auf der darüber liegenden Transportschicht verwendet wird. Wie heißt das Feld im IP-Header, in dem diese Information gespeichert wird? Welche Nummer hat das für DNS genutzt Transportprotokoll UDP und welche Nummer hat TCP?
+	\item Geben Sie im Browser die Seite \url{http://www.heise.de} noch einmal ein. Dann aktivieren Sie die Paketaufzeichnung mit Wireshark und laden die Seite noch einmal über den ”Reload“- Button des Browsers. Stoppen Sie danach die Paketaufzeichnung in Wireshark.
+	\item Beim Reload der Seite wurden weniger Segmente vom Server an den Client übertragen, als beim erstmaligen Laden der Seite. Ermitteln Sie auf Basis der ausgetauschten HTTP-Daten, weshalb das so ist!
+	\item Trennen Sie nun die Netzwerkverbindung. Daraufhin aktivieren Sie die Paketaufzeichnung mit Wireshark. Fordern Sie dann die Seite \url{http://www.heise.de} vom Server an. Stoppen Sie die Paketaufzeichnung von Wireshark sobald der Browser die Fehlermeldung ausgibt,
+dass er die Seite bzw. den Server nicht finden konnte.
+	\begin{itemize}
+	 \item In der Paketaufzeichnung von Wireshark sehen Sie einige Pakete. Weshalb ist das so und um welche Pakete handelt es sich?
+	 \item In Wireshark werden auch die (relativen) Zeiten angezeigt, zu denen die Pakete aus- gesandt wurden. Ermitteln Sie die Zeitdifferenzen zwischen dem Senden aufeinander folgender Pakete! Was stellen Sie fest, und weshalb ist das sinnvoll?
+	\end{itemize}
+\end{enumerate}
+\subsection{Vorbereitung}
+Für diese Aufgabe wird nur die Auseinandersetzung mit Wireshark von Aufgabe 1 benötigt. 
+\subsection{Durchführung}
+\subsubsection{a)}
+Die IP-Adresse lautet vom MacBook: \textbf{192.168.2.112}\\
+Die IP-Adrese des Routers: \textbf{192.168.2.1}
+\subsubsection{b)}
+Diese Aufgabe wurde gelöst und der Filter erstellt.
+\subsubsection{c)}
+Als erstes flushen wir den DNS unter MacOS.
+\begin{lstlisting}
+sudo dscacheutil -flushcache
+\end{lstlisting}
+Und deaktivieren wie vorgeben die Optionen.
+\subsubsection{d)}
+Die Aufgabe wurde gemacht.
+\subsubsection{e)}
+DNS wird benötigt um den FQDN in eine IP umzuwandeln.
+
+\subsection{Fazit}
+Wir konnten den Teil, von Aufgabe 2 nicht weiterführen da wir nicht den HTTP Teil sehen konnten, wir konnten nur den DNS-Teil sehen.
