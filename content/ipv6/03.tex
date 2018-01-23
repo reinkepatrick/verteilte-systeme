@@ -20,5 +20,30 @@ Nachdem Sie sich mit dem Adressaufbau von IPv6 befasst haben, recherchieren Sie 
 Für diese Aufgabe müssen wir uns mit \textbf{IPv6} auseinandersetzen.
 
 \subsection{Durchführung}
+a) Adressbereiche:
+\begin{itemize}
+\item 0:0:0:0:0:ffff::/96 IPv4 mapped IPv6 Adressen. Verbindet "die alte Welt mit der neuen".
+\item 2000::/3 sind von der IANA(Internet Assigned Numbers Authority) vergebene Adressen.
+\item 2001-Adressen werden an Provider vergeben, die diese an ihre Kunden verteilen.
+\item Mit 2003 beginende Adressen werden von der RIR(Regional Internet Registry) vergeben.
+\end{itemize}
+
+b) Eine Unique Local Unicast Adresse ist vergleichbar mit den im eingenen Netzwerk (LAN) verteilten Adressen.
+
+c) Eine Link Local Adresse beginnt mit fe80:: oder febf::.
+
+Es folgt ein Beispiel für eine Link Local Adresse:
+\begin{lstlisting}
+		fe80::468A:5Bff:fe9E:23F6
+\end{lstlisting}
+
+Eine Link Local Adresse ist nur im LAN erreichbar, wird also nicht vom Router weitergeleitet.
+
+d) Mit ff01::2,ff02::2 und ff05::2 können alle Router in einem Netzwerksegment angesprochen werden.
+
+e)MAC-Adresse: 08:00:27:45:a0:aa
+Adressbereich (Subnetz): 2001:0db8:a513:8701:0:0:0:0 - 2001:0db8:a513:8701:ffff:ffff:ffff:ffff
+Globale Multicast Adresse
 
 \subsection{Fazit}
+Bei dieser Aufgabe gab es keine Probleme.

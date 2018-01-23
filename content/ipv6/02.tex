@@ -18,7 +18,30 @@ Machen Sie sich mit dem generellem Adressaufbau von IPv6 Adressen vertraut.
 \end{enumerate}
 
 \subsection{Vorbereitung}
+Einlesen in IPv6.
 
 \subsection{Durchführung}
+a) Der Präfix beschreibt den vorderen Teil der Adresse und ist damit die Adresse des Netzwerks. Der Interface-Identifier ist der hintere Teil, also die letzten 64 Bit, der IPv6 Adresse.
+
+b) 2001:db8:0:90f::fe00:aa/64 als verkürzte Schreibweise und 9r}Vsq9r^70Kw`hfdTy} als Base85.
+
+c) MAC-Adresse: 44:8A:5B:9E:23:F6
+\begin{itemize}
+\item ff:fe in der Mitte einfügen: 44:8A:5B:ff:fe:9E:23:F6
+\item In IPv6-Format umschreiben: 448A:5Bff:fe9E:23F6
+\item Ersten 2 Ziffern von hex zu binär konvertieren: 44 -> 1000100
+\item 6. Bit invertieren: 1000100 -> 1000110
+\item Zurück zu hex konvertieren: 1000110 -> 46
+\item Ersten Teil der Adresse mit neuem ersetzen: 468A:5Bff:fe9E:23F6
+\item Link-Local Präfix hinzufügen: fe80::468A:5Bff:fe9E:23F6
+\end{itemize}
+\subsection{Fazit}
+
+d) 2001:0db8:3210:0:0:0:0:0 - 2001:0db8:3210:ffff:ffff:ffff:ffff:ffff
+
+e) NAT wurde erfunden als die IPv4 Adressen ausgingen. Da es genug IPv6 Adressen gibt ist NAT nun nicht mehr nötig.
+
+f) Es ist durchaus möglich einen Nutzer/Gerät nach Zuteilung eines neuen Netz-Präfixes wiederzuerkennen wenn die IP-Adresse aus der MAC-Adresse errechnet wird. Dies könnte ein Problem in der Netzanonymität darstellen.
 
 \subsection{Fazit}
+Bei dieser Aufgabe gab es keine Probleme.

@@ -11,7 +11,11 @@ Eine wichtige Neuerung von IPv6 ist die Fähigkeit der automatischen Selbstkonfi
 \end{enumerate}
 
 \subsection{Vorbereitung}
+Einlesen in Stateless Address Autoconfiguration
 
 \subsection{Durchführung}
+a) Der Client bildet sich nach dem Start zunächst eine Link Local Adresse mit Interface Identifier aus der MAC-Adresse (Windows nutzt dafür nicht die MAC-Adresse, sondern eine zufällig generierte). Will dieser Client nun auf das Internet zugreifen, bekommt er per Router-Advertisement den globalen Präfix und bildet sich seine globale IPv6 Adresse selber.
 
+b) Für diesen Vorgang wird das Neighbor Discovery Protocol (NDP) benutzt, mittels dem sich der Client auf die Suche nach einem Router macht. Es arbeitet auf Schicht 3 des OSI-Modells.
 \subsection{Fazit}
+Bei dieser Aufgabe gab es keine Probleme.
